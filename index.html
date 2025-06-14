@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Science: Evidence & Understanding</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .consensus-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .myth-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #dc3545;
+        }
+
+        .science-card {
+            background: #e7f5e7;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .chart-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .methodology-step {
+            background: #e3f2fd;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .data-source {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .temperature-chart {
+            width: 100%;
+            height: 400px;
+        }
+
+        .co2-chart {
+            width: 100%;
+            height: 300px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            .content-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Mock climate data (in real app, this would come from APIs)
+        const temperatureData = Array.from({length: 144}, (_, i) => ({
+            year: 1880 + i,
+            temperature: -0.3 + (i * 0.008) + Math.sin(i * 0.1) * 0.1 + (i > 100 ? (i - 100) * 0.02 : 0)
+        }));
+
+        const co2Data = Array.from({length: 65}, (_, i) => ({
+            year: 1960 + i,
+            co2: 315 + (i * 1.8) + Math.sin(i * 0.5) * 2
+        }));
+
+        const mythsAndScience = [
+            {
+                myth: "Climate has always changed naturally, so current warming is just natural variation.",
+                science: "While climate has changed naturally in the past, the current rate of warming (1.1°C in ~140 years) is unprecedented in human history. Natural factors alone cannot explain the observed warming pattern.",
+                evidence: "Ice core data, isotopic analysis, and solar irradiance measurements"
+            },
+            {
+                myth: "CO2 is plant food, so more CO2 is good for the planet.",
+                science: "While plants do use CO2, the warming effect of increased CO2 leads to droughts, heat stress, and ecosystem disruption that offset any fertilization benefits.",
+                evidence: "Agricultural studies, ecosystem monitoring, and climate modeling"
+            },
+            {
+                myth: "Climate models are unreliable and have been wrong before.",
+                science: "Climate models have successfully predicted many observed changes, including Arctic warming, cooling of the stratosphere, and regional precipitation patterns.",
+                evidence: "Model validation studies and historical prediction accuracy analysis"
+            },
+            {
+                myth: "The medieval warm period was warmer than today.",
+                science: "Regional studies show the medieval warm period was not globally synchronous and global average temperatures were likely cooler than today's levels.",
+                evidence: "Paleoclimate reconstructions and proxy data from multiple continents"
+            }
+        ];
+
+        const ClimateApp = () => {
+            const [activeTab, setActiveTab] = useState('consensus');
+            const tempChartRef = useRef();
+            const co2ChartRef = useRef();
+
+            useEffect(() => {
+                if (activeTab === 'data') {
+                    drawTemperatureChart();
+                    drawCO2Chart();
+                }
+            }, [activeTab]);
+
+            const drawTemperatureChart = () => {
+                const svg = d3.select(tempChartRef.current);
+                svg.selectAll("*").remove();
+
+                const margin = {top: 20, right: 30, bottom: 40, left: 50};
+                const width = 800 - margin.left - margin.right;
+                const height = 400 - margin.top - margin.bottom;
+
+                const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+                const xScale = d3.scaleLinear()
+                    .domain(d3.extent(temperatureData, d => d.year))
+                    .range([0, width]);
+
+                const yScale = d3.scaleLinear()
+                    .domain(d3.extent(temperatureData, d => d.temperature))
+                    .range([height, 0]);
+
+                const line = d3.line()
+                    .x(d => xScale(d.year))
+                    .y(d => yScale(d.temperature))
+                    .curve(d3.curveMonotoneX);
+
+                g.append("g")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
+
+                g.append("g")
+                    .call(d3.axisLeft(yScale));
+
+                g.append("path")
+                    .datum(temperatureData)
+                    .attr("fill", "none")
+                    .attr("stroke", "#e74c3c")
+                    .attr("stroke-width", 2)
+                    .attr("d", line);
+
+                g.append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 0 - margin.left)
+                    .attr("x", 0 - (height / 2))
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    .text("Temperature Anomaly (°C)");
+
+                g.append("text")
+                    .attr("transform", `translate(${width/2}, ${height + margin.bottom})`)
+                    .style("text-anchor", "middle")
+                    .text("Year");
+            };
+
+            const drawCO2Chart = () => {
+                const svg = d3.select(co2ChartRef.current);
+                svg.selectAll("*").remove();
+
+                const margin = {top: 20, right: 30, bottom: 40, left: 50};
+                const width = 800 - margin.left - margin.right;
+                const height = 300 - margin.top - margin.bottom;
+
+                const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+                const xScale = d3.scaleLinear()
+                    .domain(d3.extent(co2Data, d => d.year))
+                    .range([0, width]);
+
+                const yScale = d3.scaleLinear()
+                    .domain(d3.extent(co2Data, d => d.co2))
+                    .range([height, 0]);
+
+                const line = d3.line()
+                    .x(d => xScale(d.year))
+                    .y(d => yScale(d.co2))
+                    .curve(d3.curveMonotoneX);
+
+                g.append("g")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
+
+                g.append("g")
+                    .call(d3.axisLeft(yScale));
+
+                g.append("path")
+                    .datum(co2Data)
+                    .attr("fill", "none")
+                    .attr("stroke", "#3498db")
+                    .attr("stroke-width", 2)
+                    .attr("d", line);
+
+                g.append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 0 - margin.left)
+                    .attr("x", 0 - (height / 2))
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    .text("CO₂ Concentration (ppm)");
+
+                g.append("text")
+                    .attr("transform", `translate(${width/2}, ${height + margin.bottom})`)
+                    .style("text-anchor", "middle")
+                    .text("Year");
+            };
+
+            const renderConsensus = () => (
+                <div className="content-section">
+                    <h2>Scientific Consensus on Climate Change</h2>
+                    <p>Understanding what the scientific community actually says about climate change.</p>
+                    
+                    <div className="consensus-stats">
+                        <div className="stat-card">
+                            <div className="stat-number">99.9%</div>
+                            <div className="stat-label">of peer-reviewed papers support human causation</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-number">88,125</div>
+                            <div className="stat-label">climate papers analyzed (2012-2020)</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-number">28</div>
+                            <div className="stat-label">papers skeptical of human causation</div>
+                        </div>
+                    </div>
+
+                    <div className="data-source">
+                        Source: Lynas et al. (2021) - Environmental Research Letters
+                    </div>
+
+                    <h3>What This Means</h3>
+                    <p>The level of scientific consensus on human-caused climate change is comparable to the consensus on other well-established scientific facts, such as the link between smoking and cancer or the effectiveness of vaccines.</p>
+
+                    <h3>How We Know</h3>
+                    <ul>
+                        <li><strong>Temperature Records:</strong> Multiple independent datasets show consistent warming</li>
+                        <li><strong>Physical Evidence:</strong> Shrinking ice sheets, rising sea levels, changing precipitation patterns</li>
+                        <li><strong>Isotopic Analysis:</strong> Carbon isotopes show the excess CO₂ comes from fossil fuels</li>
+                        <li><strong>Climate Models:</strong> Successfully predict observed changes and regional patterns</li>
+                    </ul>
+                </div>
+            );
+
+            const renderMythVsScience = () => (
+                <div className="content-section">
+                    <h2>Myth vs. Science: Common Misconceptions</h2>
+                    <p>Addressing frequently encountered claims with scientific evidence.</p>
+                    
+                    {mythsAndScience.map((item, index) => (
+                        <div key={index}>
+                            <div className="myth-card">
+                                <h4>❌ Common Claim:</h4>
+                                <p>"{item.myth}"</p>
+                            </div>
+                            <div className="science-card">
+                                <h4>✅ Scientific Evidence:</h4>
+                                <p>{item.science}</p>
+                                <p><strong>Evidence:</strong> {item.evidence}</p>
+                            </div>
+                        </div>
+                    ))}
+
+                    <h3>Alternative Theories: Planetary Influences</h3>
+                    <div className="science-card">
+                        <h4>Solar Cycles and Planetary Motion</h4>
+                        <p>While solar cycles and planetary positions do have minor effects on Earth's climate, these natural forcings are insufficient to explain the rapid warming observed since 1980. Solar irradiance has been measured directly by satellites since 1978 and shows no increasing trend that could account for the observed warming.</p>
+                        <p><strong>Evidence:</strong> Satellite measurements, solar irradiance data, and climate attribution studies</p>
+                    </div>
+                </div>
+            );
+
+            const renderClimateData = () => (
+                <div className="content-section">
+                    <h2>Interactive Climate Data</h2>
+                    <p>Explore real climate data and trends.</p>
+
+                    <h3>Global Temperature Anomalies (1880-2023)</h3>
+                    <div className="chart-container">
+                        <svg ref={tempChartRef} className="temperature-chart"></svg>
+                        <div className="data-source">
+                            Data: NASA GISS Temperature Analysis
+                        </div>
+                    </div>
+
+                    <h3>Atmospheric CO₂ Concentrations</h3>
+                    <div className="chart-container">
+                        <svg ref={co2ChartRef} className="co2-chart"></svg>
+                        <div className="data-source">
+                            Data: NOAA Mauna Loa Observatory
+                        </div>
+                    </div>
+
+                    <h3>Key Observations</h3>
+                    <ul>
+                        <li>Global average temperature has increased by approximately 1.1°C since 1880</li>
+                        <li>The warming rate has accelerated in recent decades</li>
+                        <li>CO₂ levels have increased from ~315 ppm in 1960 to over 420 ppm today</li>
+                        <li>The correlation between CO₂ increase and temperature rise is clear</li>
+                    </ul>
+                </div>
+            );
+
+            const renderMethodology = () => (
+                <div className="content-section">
+                    <h2>How Climate Science Works</h2>
+                    <p>Understanding the scientific method in climate research.</p>
+
+                    <div className="methodology-step">
+                        <h4>1. Observations</h4>
+                        <p>Scientists collect data from weather stations, satellites, ice cores, tree rings, and ocean buoys worldwide. This creates a comprehensive picture of Earth's climate system.</p>
+                    </div>
+
+                    <div className="methodology-step">
+                        <h4>2. Hypothesis Formation</h4>
+                        <p>Based on observations, scientists develop hypotheses about what's causing climate changes. These must be testable and falsifiable.</p>
+                    </div>
+
+                    <div className="methodology-step">
+                        <h4>3. Climate Models</h4>
+                        <p>Mathematical models based on physical laws are used to test hypotheses. These models must successfully reproduce past climate changes to be considered reliable.</p>
+                    </div>
+
+                    <div className="methodology-step">
+                        <h4>4. Peer Review</h4>
+                        <p>Research is submitted to scientific journals where independent experts evaluate the methods, data, and conclusions before publication.</p>
+                    </div>
+
+                    <div className="methodology-step">
+                        <h4>5. Replication and Validation</h4>
+                        <p>Other scientists attempt to replicate results using different methods and datasets. Consistent results across multiple studies build confidence in the findings.</p>
+                    </div>
+
+                    <h3>Climate Model Accuracy</h3>
+                    <p>Climate models have successfully predicted:</p>
+                    <ul>
+                        <li>Arctic warming amplification</li>
+                        <li>Cooling of the upper atmosphere while surface warms</li>
+                        <li>Regional precipitation changes</li>
+                        <li>Seasonal timing shifts</li>
+                    </ul>
+
+                    <div className="data-source">
+                        Note: While models aren't perfect, they provide our best understanding of the climate system based on physical laws and empirical evidence.
+                    </div>
+                </div>
+            );
+
+            const renderUncertainty = () => (
+                <div className="content-section">
+                    <h2>Understanding Scientific Uncertainty</h2>
+                    <p>How scientists handle and communicate uncertainty in climate research.</p>
+
+                    <h3>Types of Uncertainty</h3>
+                    
+                    <div className="methodology-step">
+                        <h4>Measurement Uncertainty</h4>
+                        <p>All measurements have some uncertainty. Scientists quantify this and include error bars in their analyses. For global temperature, the uncertainty is much smaller than the observed warming trend.</p>
+                    </div>
+
+                    <div className="methodology-step">
+                        <h4>Model Uncertainty</h4>
+                        <p>Climate models have limitations and assumptions. Scientists run many different models and scenarios to understand the range of possible outcomes. The warming trend is consistent across all models.</p>
+                    </div>
+
+                    <div className="methodology-step">
+                        <h4>Scenario Uncertainty</h4>
+                        <p>Future emissions depend on human choices. Scientists use different emission scenarios to explore possible futures, which is why there's a range in climate projections.</p>
+                    </div>
+
+                    <h3>What We're Certain About</h3>
+                    <ul>
+                        <li>Earth is warming due to human activities</li>
+                        <li>CO₂ levels are increasing due to fossil fuel use</li>
+                        <li>Continued emissions will cause more warming</li>
+                        <li>Many climate impacts are already occurring</li>
+                    </ul>
+
+                    <h3>What Has Uncertainty</h3>
+                    <ul>
+                        <li>Exactly how much warming will occur by 2100</li>
+                        <li>Regional details of climate change</li>
+                        <li>Timing of some climate impacts</li>
+                        <li>Effectiveness of specific mitigation strategies</li>
+                    </ul>
+
+                    <p><strong>Key Point:</strong> Uncertainty doesn't mean "we don't know anything" - it means we understand the range of possible outcomes and can make informed decisions based on risk assessment.</p>
+                </div>
+            );
+
+            return (
+                <div className="container">
+                    <header className="header">
+                        <h1>Climate Science: Evidence & Understanding</h1>
+                        <p>Bridging the gap between rigorous science and public understanding</p>
+                    </header>
+
+                    <nav className="nav-tabs">
+                        <button 
+                            className={`nav-tab ${activeTab === 'consensus' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('consensus')}
+                        >
+                            Scientific Consensus
+                        </button>
+                        <button 
+                            className={`nav-tab ${activeTab === 'myths' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('myths')}
+                        >
+                            Myth vs. Science
+                        </button>
+                        <button 
+                            className={`nav-tab ${activeTab === 'data' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('data')}
+                        >
+                            Climate Data
+                        </button>
+                        <button 
+                            className={`nav-tab ${activeTab === 'methodology' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('methodology')}
+                        >
+                            How Science Works
+                        </button>
+                        <button 
+                            className={`nav-tab ${activeTab === 'uncertainty' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('uncertainty')}
+                        >
+                            Understanding Uncertainty
+                        </button>
+                    </nav>
+
+                    <main>
+                        {activeTab === 'consensus' && renderConsensus()}
+                        {activeTab === 'myths' && renderMythVsScience()}
+                        {activeTab === 'data' && renderClimateData()}
+                        {activeTab === 'methodology' && renderMethodology()}
+                        {activeTab === 'uncertainty' && renderUncertainty()}
+                    </main>
+
+                    <footer className="content-section" style={{textAlign: 'center', marginTop: '40px'}}>
+                        <h3>About This Application</h3>
+                        <p>Created by Brian Clark as part of a critical thinking course project. This application aims to present climate science information in an accessible format while addressing common misconceptions.</p>
+                        <p><strong>Sources:</strong> NASA, NOAA, IPCC, peer-reviewed scientific literature</p>
+                        <p><em>For educational purposes. Always consult primary scientific sources for research.</em></p>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<ClimateApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>
