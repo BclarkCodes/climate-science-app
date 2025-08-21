@@ -1,598 +1,488 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Climate Science: Evidence & Understanding</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Education for All Alliance | HON490</title>
+    <link rel="icon" type="image/png" href="https://drive.google.com/uc?export=view&id=1pjWHJykXf43-CwmRRrOrZNkSZ-6Ikdf1">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles & Color Palette -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Define custom color properties for easy use */
+        :root {
+            --rich-amber: #D97706;
+            --dark-amber: #92400E;
+            --accent-gold: #F59E0B;
+            --light-gold: #FCD34D;
+            --warm-brown: #78350F;
+            --dark-brown: #451A03;
+            --cream-bg: #FFFBEB;
+            --light-cream: #FEF3C7;
         }
 
+        /* Apply custom fonts */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream-bg);
+            color: var(--warm-brown);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            color: var(--dark-amber);
         }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+        /* Custom classes for theme colors */
+        .bg-rich-amber { background-color: var(--rich-amber); }
+        .text-rich-amber { color: var(--rich-amber); }
+        .bg-dark-amber { background-color: var(--dark-amber); }
+        .text-dark-amber { color: var(--dark-amber); }
+        .bg-accent-gold { background-color: var(--accent-gold); }
+        .text-accent-gold { color: var(--accent-gold); }
+        .bg-warm-brown { background-color: var(--warm-brown); }
+        .text-warm-brown { color: var(--warm-brown); }
+        .bg-cream-bg { background-color: var(--cream-bg); }
+        .bg-light-cream { background-color: var(--light-cream); }
+        .border-rich-amber { border-color: var(--rich-amber); }
+        .border-accent-gold { border-color: var(--accent-gold); }
+
+        /* Smooth transitions for interactive elements */
+        .transition-all {
+            transition: all 0.3s ease-in-out;
         }
 
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            font-weight: 700;
+        /* Card hover effect */
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        /* High Contrast Mode */
+        body.high-contrast {
+            background-color: #000;
+            color: #fff;
         }
+        body.high-contrast h1,
+        body.high-contrast h2,
+        body.high-contrast h3,
+        body.high-contrast h4,
+        body.high-contrast h5,
+        body.high-contrast h6 {
+            color: #FFFF00; /* Yellow for high visibility */
+        }
+        body.high-contrast .bg-cream-bg,
+        body.high-contrast .bg-light-cream {
+            background-color: #1a1a1a;
+        }
+        body.high-contrast .text-warm-brown,
+        body.high-contrast .text-dark-amber {
+            color: #fff;
+        }
+        body.high-contrast .border-rich-amber {
+            border-color: #FFFF00;
+        }
+    /* Logo hover effect */
+.logo-container {
+    transition: transform 0.3s ease-in-out;
+}
+.logo-container:hover {
+    transform: scale(1.1);
+}
 
-        .nav-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
 
-        .nav-tab {
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .nav-tab:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .nav-tab.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .content-section {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-
-        .consensus-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .myth-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            border-left: 5px solid #dc3545;
-        }
-
-        .science-card {
-            background: #e7f5e7;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            border-left: 5px solid #28a745;
-        }
-
-        .chart-container {
-            margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-        }
-
-        .methodology-step {
-            background: #e3f2fd;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-            border-left: 4px solid #2196f3;
-        }
-
-        .data-source {
-            font-size: 0.9rem;
-            color: #666;
-            font-style: italic;
-            margin-top: 10px;
-        }
-
-        .button {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            margin: 10px 0;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .temperature-chart {
-            width: 100%;
-            height: 400px;
-        }
-
-        .co2-chart {
-            width: 100%;
-            height: 300px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            .nav-tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-            .content-section {
-                padding: 20px;
-            }
-        }
     </style>
 </head>
-<body>
-    <div id="root"></div>
+<body class="antialiased">
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-cream-bg sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+               <!-- BMT Logo -->
+        <div class="w-12 h-12 logo-container">
+            <img src="https://drive.google.com/thumbnail?id=1pjWHJykXf43-CwmRRrOrZNkSZ-6Ikdf1&sz=w200"
+            alt="BMT Logo"
+            class="w-full h-full object-contain">
+        </div>
 
-        // Mock climate data (in real app, this would come from APIs)
-        const temperatureData = Array.from({length: 144}, (_, i) => ({
-            year: 1880 + i,
-            temperature: -0.3 + (i * 0.008) + Math.sin(i * 0.1) * 0.1 + (i > 100 ? (i - 100) * 0.02 : 0)
-        }));
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black text-dark-amber">Education for All Alliance</h1>
+                    <p class="text-xs md:text-sm text-warm-brown">AI-Powered Adaptive Learning & Wellness Platform</p>
+                </div>
+            </div>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="text-warm-brown hover:text-rich-amber transition-all">Home</a>
+                <a href="#features" class="text-warm-brown hover:text-rich-amber transition-all">Features</a>
+                <a href="#demo" class="text-warm-brown hover:text-rich-amber transition-all">Demo</a>
+                <a href="#team" class="text-warm-brown hover:text-rich-amber transition-all">Team</a>
+                <a href="#impact" class="text-warm-brown hover:text-rich-amber transition-all">Impact</a>
+                <a href="#contact" class="text-warm-brown hover:text-rich-amber transition-all">Contact</a>
+            </nav>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-dark-amber focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#home" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Home</a>
+            <a href="#features" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Features</a>
+            <a href="#demo" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Demo</a>
+            <a href="#team" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Team</a>
+            <a href="#impact" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Impact</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Contact</a>
+        </div>
+    </header>
 
-        const co2Data = Array.from({length: 65}, (_, i) => ({
-            year: 1960 + i,
-            co2: 315 + (i * 1.8) + Math.sin(i * 0.5) * 2
-        }));
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="bg-light-cream py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-6xl font-black mb-4 leading-tight">Transforming Education for Every Child Through AI</h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-warm-brown">Our adaptive learning platform provides personalized academic pathways and integrated mental health support, ensuring children with learning disabilities can achieve their full potential.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#demo" class="bg-rich-amber text-white font-bold py-3 px-8 rounded-full hover:bg-dark-amber transition-all shadow-lg">View Demo</a>
+                    <a href="#features" class="bg-accent-gold text-dark-brown font-bold py-3 px-8 rounded-full hover:bg-rich-amber hover:text-white transition-all shadow-lg">Learn More</a>
+                </div>
+            </div>
+        </section>
 
-        const mythsAndScience = [
-            {
-                myth: "Climate has always changed naturally, so current warming is just natural variation.",
-                science: "While climate has changed naturally in the past, the current rate of warming (1.1°C in ~140 years) is unprecedented in human history. Natural factors alone cannot explain the observed warming pattern.",
-                evidence: "Ice core data, isotopic analysis, and solar irradiance measurements"
-            },
-            {
-                myth: "CO2 is plant food, so more CO2 is good for the planet.",
-                science: "While plants do use CO2, the warming effect of increased CO2 leads to droughts, heat stress, and ecosystem disruption that offset any fertilization benefits.",
-                evidence: "Agricultural studies, ecosystem monitoring, and climate modeling"
-            },
-            {
-                myth: "Climate models are unreliable and have been wrong before.",
-                science: "Climate models have successfully predicted many observed changes, including Arctic warming, cooling of the stratosphere, and regional precipitation patterns.",
-                evidence: "Model validation studies and historical prediction accuracy analysis"
-            },
-            {
-                myth: "The medieval warm period was warmer than today.",
-                science: "Regional studies show the medieval warm period was not globally synchronous and global average temperatures were likely cooler than today's levels.",
-                evidence: "Paleoclimate reconstructions and proxy data from multiple continents"
+        <!-- Core Features Section -->
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold">An Integrated Approach to Learning and Wellness</h3>
+                    <p class="text-lg text-warm-brown mt-2">Our platform is built on four core pillars designed to support the whole child.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Feature 1: Adaptive Learning -->
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-rich-amber transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
+                            <svg class="w-8 h-8 text-rich-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Adaptive Learning</h4>
+                        <p class="text-warm-brown">Our AI core adjusts lesson difficulty and teaching methods in real-time, matching each child's unique pace and learning style for optimal comprehension.</p>
+                    </div>
+                    <!-- Feature 2: Mental Health Support -->
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-accent-gold transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
+                            <svg class="w-8 h-8 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Mental Health Support</h4>
+                        <p class="text-warm-brown">Integrated tools like mood tracking, guided breathing exercises, and positive reinforcement help build emotional resilience and wellness.</p>
+                    </div>
+                    <!-- Feature 3: Social Skills Coaching -->
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-rich-amber transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
+                            <svg class="w-8 h-8 text-rich-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Social Skills Coaching</h4>
+                        <p class="text-warm-brown">Interactive scenarios and AI-driven conversation training provide a safe space for children to practice and improve their social interactions.</p>
+                    </div>
+                    <!-- Feature 4: Accessibility Features -->
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-accent-gold transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
+                            <svg class="w-8 h-8 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Accessibility Features</h4>
+                        <p class="text-warm-brown">A fully customizable interface with speech-to-text, visual aids, adjustable fonts, and high-contrast modes to meet diverse needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demo Section -->
+        <section id="demo" class="py-20 bg-light-cream">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold">Experience the Platform</h3>
+                    <p class="text-lg text-warm-brown mt-2">Interact with a live demo to see how our AI-powered features work.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-xl p-8 border border-gray-200">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                        <!-- Left Column: Learning & Social -->
+                        <div>
+                            <!-- Adaptive Math Problem -->
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4">1. Adaptive Learning: Math Challenge</h4>
+                                <div id="math-problem-container" class="bg-gray-100 p-6 rounded-lg">
+                                    <p class="text-lg text-center font-semibold mb-4" id="math-question">What is 5 + 7?</p>
+                                    <div id="math-options" class="grid grid-cols-2 gap-4">
+                                        <button class="math-option bg-rich-amber text-white p-3 rounded-lg hover:bg-dark-amber transition-all">12</button>
+                                        <button class="math-option bg-rich-amber text-white p-3 rounded-lg hover:bg-dark-amber transition-all">10</button>
+                                        <button class="math-option bg-rich-amber text-white p-3 rounded-lg hover:bg-dark-amber transition-all">11</button>
+                                        <button class="math-option bg-rich-amber text-white p-3 rounded-lg hover:bg-dark-amber transition-all">13</button>
+                                    </div>
+                                    <p id="math-feedback" class="text-center mt-4 font-semibold"></p>
+                                </div>
+                            </div>
+
+                            <!-- Social Skills Scenario -->
+                            <div>
+                                <h4 class="text-xl font-bold mb-4">2. Social Skills: Making a Friend</h4>
+                                <div class="bg-gray-100 p-6 rounded-lg">
+                                    <p class="mb-4">You see a new student sitting alone at lunch. What do you do?</p>
+                                    <div id="social-options" class="space-y-3">
+                                        <button class="social-option w-full text-left bg-white p-3 rounded-lg border border-gray-300 hover:bg-blue-100 hover:border-blue-400 transition-all">A) Ignore them and sit with your friends.</button>
+                                        <button class="social-option w-full text-left bg-white p-3 rounded-lg border border-gray-300 hover:bg-blue-100 hover:border-blue-400 transition-all">B) Go over and say, "Hi, my name is Alex. Can I sit here?"</button>
+                                        <button class="social-option w-full text-left bg-white p-3 rounded-lg border border-gray-300 hover:bg-blue-100 hover:border-blue-400 transition-all">C) Ask your friends what they think you should do.</button>
+                                    </div>
+                                    <p id="social-feedback" class="mt-4 font-semibold"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Wellness & Accessibility -->
+                        <div>
+                             <!-- Mental Health Check-in -->
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4">3. Mental Health: How are you feeling?</h4>
+                                <div class="bg-gray-100 p-6 rounded-lg">
+                                    <div id="mood-tracker" class="flex justify-around items-center">
+                                        <span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Happy">😊</span>
+<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Okay">😐</span>
+<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Sad">😢</span>
+<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Anxious">😟</span>
+<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Angry">😠</span>
+                                    </div>
+                                    <p id="mood-feedback" class="text-center mt-4 font-semibold"></p>
+                                </div>
+                            </div>
+
+                            <!-- Accessibility Settings -->
+                            <div>
+                                <h4 class="text-xl font-bold mb-4">4. Accessibility Settings</h4>
+                                <div class="bg-gray-100 p-6 rounded-lg space-y-4">
+                                    <div>
+                                        <label for="font-size-slider" class="font-semibold">Font Size</label>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="text-sm">A</span>
+                                            <input id="font-size-slider" type="range" min="12" max="24" value="16" class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer">
+                                            <span class="text-2xl">A</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="font-semibold">Contrast Mode</label>
+                                        <button id="contrast-toggle" class="w-full bg-accent-gold text-dark-brown font-bold p-3 rounded-lg hover:bg-rich-amber hover:text-white transition-all mt-2">Toggle High Contrast</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold">Our Team</h3>
+                    <p class="text-lg text-warm-brown mt-2">Meet the passionate students behind the Education for All Alliance.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <!-- Team Member 1 -->
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=MM" alt="Monica McNair" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
+                        <h4 class="text-xl font-bold">Monica McNair</h4>
+                        <p class="text-rich-amber font-semibold mb-2">Project Lead & AI Specialist</p>
+                        <p class="text-warm-brown text-sm">Monica leads the project vision and oversees the development of the adaptive learning algorithms, ensuring our AI is both effective and ethical.</p>
+                    </div>
+                    <!-- Team Member 2 -->
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=BC" alt="Brian Clark" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
+                        <h4 class="text-xl font-bold">Brian Clark</h4>
+                        <p class="text-rich-amber font-semibold mb-2">UX/UI & Frontend Developer</p>
+                        <p class="text-warm-brown text-sm">Brian crafts the user experience, focusing on creating an intuitive, accessible, and engaging interface for children, parents, and educators.</p>
+                    </div>
+                    <!-- Team Member 3 -->
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=TB" alt="Tonya Barnes" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
+                        <h4 class="text-xl font-bold">Tonya Barnes</h4>
+                        <p class="text-rich-amber font-semibold mb-2">Research & Content Strategist</p>
+                        <p class="text-warm-brown text-sm">Tonya grounds our work in evidence-based practices, conducting research and developing content for mental wellness and social skills modules.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem, Solution & Research Section -->
+        <section id="impact" class="py-20 bg-light-cream">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Left Column: Problem & Solution -->
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Our Mission</h3>
+                        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                            <h4 class="text-xl font-bold mb-2">The Problem</h4>
+                            <p class="text-warm-brown">Children with learning disabilities often face significant educational barriers. Many existing digital tools are one-size-fits-all, failing to support the diverse spectrum of learning needs. Compounded by the reduction of specialized support in schools and the impact of mental health challenges, a critical gap exists in providing effective, personalized education.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h4 class="text-xl font-bold mb-2">Our Solution & Hypothesis</h4>
+                            <p class="text-warm-brown"><strong>Hypothesis:</strong> If we provide higher quality, personalized education for children with learning disabilities, then we can deliver one-on-one AI-powered experiences that adapt to each child's unique academic and emotional needs, leading to improved outcomes and greater well-being.</p>
+                        </div>
+                    </div>
+                    <!-- Right Column: Research & Impact -->
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Research & Global Impact</h3>
+                        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                            <h4 class="text-xl font-bold mb-2">Evidence-Based Foundation</h4>
+                            <p class="text-warm-brown">Our approach is built upon a strong foundation of scholarly research in special education, AI, and developmental psychology. We have compiled an extensive annotated bibliography of peer-reviewed sources that validate the effectiveness of adaptive technology and integrated wellness support. This ensures our design decisions are evidence-based and impactful.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h4 class="text-xl font-bold mb-2">Technology & Security</h4>
+                            <p class="text-warm-brown">We leverage AI/ML for adaptive learning, NLP for social coaching, and computer vision for engagement analytics. Privacy is paramount; we are committed to compliance with COPPA, HIPAA, and GDPR, using end-to-end encryption and transparent consent protocols to protect user data.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-12 bg-white p-8 rounded-lg shadow-lg border-t-4 border-rich-amber">
+                    <h4 class="text-2xl font-bold">Making Earth a Better Planet</h4>
+                    <p class="text-lg text-warm-brown mt-2 max-w-4xl mx-auto">By providing 24/7, accessible, and high-quality support, we aim to help over <strong>10 million children</strong>, projecting an <strong>85% improvement</strong> in learning outcomes. Our work directly addresses UN SDG #4, promoting inclusive and equitable education for all and fostering a more sustainable future.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-dark-brown text-cream-bg py-12">
+        <div class="container mx-auto px-6 text-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/University_of_Arizona_Global_Campus_logo.svg" alt="University of Arizona Global Campus Logo" class="h-12 mx-auto mb-4 filter invert brightness-0">
+            <p class="font-semibold">University of Arizona Global Campus</p>
+            <p class="text-sm mb-4">HON490: Honors Program Capstone</p>
+            <p class="text-sm">This project is a conceptual demonstration for academic purposes.</p>
+            <p class="text-sm mt-2">For inquiries, please contact the team via our academic advisors.</p>
+            <div class="mt-6">
+                <p class="text-xs text-light-cream">© 2025 Education for All Alliance. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- INTERACTIVE DEMO LOGIC ---
+
+            // 1. Adaptive Math Problem
+            const mathQuestion = document.getElementById('math-question');
+            const mathOptionsContainer = document.getElementById('math-options');
+            const mathFeedback = document.getElementById('math-feedback');
+            let mathLevel = 1; // Start at level 1
+
+            const mathProblems = {
+                1: { question: "What is 5 + 7?", answer: 12, options: [12, 10, 11, 13] },
+                2: { question: "What is 15 - 6?", answer: 9, options: [8, 9, 10, 21] },
+                3: { question: "What is 4 x 6?", answer: 24, options: [10, 20, 24, 28] },
+                4: { question: "What is 35 / 5?", answer: 7, options: [5, 6, 7, 8] },
+                0: { question: "What is 3 + 2?", answer: 5, options: [4, 5, 6, 7] }, // Easier problem
+            };
+
+            function loadMathProblem(level) {
+                const problem = mathProblems[level];
+                mathQuestion.textContent = problem.question;
+                mathOptionsContainer.innerHTML = '';
+                // Shuffle options for variety
+                problem.options.sort(() => Math.random() - 0.5).forEach(opt => {
+                    const button = document.createElement('button');
+                    button.className = 'math-option bg-rich-amber text-white p-3 rounded-lg hover:bg-dark-amber transition-all';
+                    button.textContent = opt;
+                    button.addEventListener('click', () => checkMathAnswer(opt, problem.answer));
+                    mathOptionsContainer.appendChild(button);
+                });
+                mathFeedback.textContent = '';
             }
-        ];
 
-        const ClimateApp = () => {
-            const [activeTab, setActiveTab] = useState('consensus');
-            const tempChartRef = useRef();
-            const co2ChartRef = useRef();
-
-            useEffect(() => {
-                if (activeTab === 'data') {
-                    drawTemperatureChart();
-                    drawCO2Chart();
+            function checkMathAnswer(selected, correct) {
+                if (selected === correct) {
+                    mathFeedback.textContent = "Correct! Great job! Here's a harder one.";
+                    mathFeedback.style.color = '#16A34A'; // Green
+                    mathLevel = Math.min(mathLevel + 1, 4); // Increase level, max 4
+                } else {
+                    mathFeedback.textContent = "Not quite, let's try an easier one to build confidence.";
+                    mathFeedback.style.color = '#DC2626'; // Red
+                    mathLevel = Math.max(mathLevel - 1, 0); // Decrease level, min 0
                 }
-            }, [activeTab]);
+                setTimeout(() => loadMathProblem(mathLevel), 2000);
+            }
 
-            const drawTemperatureChart = () => {
-                const svg = d3.select(tempChartRef.current);
-                svg.selectAll("*").remove();
+            loadMathProblem(mathLevel);
 
-                const margin = {top: 20, right: 30, bottom: 40, left: 50};
-                const width = 800 - margin.left - margin.right;
-                const height = 400 - margin.top - margin.bottom;
-
-                const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-                const xScale = d3.scaleLinear()
-                    .domain(d3.extent(temperatureData, d => d.year))
-                    .range([0, width]);
-
-                const yScale = d3.scaleLinear()
-                    .domain(d3.extent(temperatureData, d => d.temperature))
-                    .range([height, 0]);
-
-                const line = d3.line()
-                    .x(d => xScale(d.year))
-                    .y(d => yScale(d.temperature))
-                    .curve(d3.curveMonotoneX);
-
-                g.append("g")
-                    .attr("transform", `translate(0,${height})`)
-                    .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
-
-                g.append("g")
-                    .call(d3.axisLeft(yScale));
-
-                g.append("path")
-                    .datum(temperatureData)
-                    .attr("fill", "none")
-                    .attr("stroke", "#e74c3c")
-                    .attr("stroke-width", 2)
-                    .attr("d", line);
-
-                g.append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 0 - margin.left)
-                    .attr("x", 0 - (height / 2))
-                    .attr("dy", "1em")
-                    .style("text-anchor", "middle")
-                    .text("Temperature Anomaly (°C)");
-
-                g.append("text")
-                    .attr("transform", `translate(${width/2}, ${height + margin.bottom})`)
-                    .style("text-anchor", "middle")
-                    .text("Year");
+            // 2. Mood Tracker
+            const moodEmojis = document.querySelectorAll('.mood-emoji');
+            const moodFeedback = document.getElementById('mood-feedback');
+            const moodResponses = {
+                Happy: "It's wonderful you're feeling happy! Let's keep that positive energy going.",
+                Okay: "Feeling okay is perfectly fine. Let's see if we can make today even better.",
+                Sad: "I'm sorry you're feeling sad. Remember it's okay to feel this way. Here's a 1-minute breathing exercise if you need it.",
+                Anxious: "Feeling anxious can be tough. Let's try to focus on the present moment. Take a few deep, slow breaths.",
+                Angry: "It's okay to feel angry sometimes. Let's take a moment to cool down. How about a quick, calming activity?"
             };
 
-            const drawCO2Chart = () => {
-                const svg = d3.select(co2ChartRef.current);
-                svg.selectAll("*").remove();
+            moodEmojis.forEach(emoji => {
+                emoji.addEventListener('click', () => {
+                    // Reset styles
+                    moodEmojis.forEach(e => {
+                        e.style.transform = 'scale(1)';
+                        e.style.opacity = '0.7';
+                    });
+                    // Highlight selected
+                    emoji.style.transform = 'scale(1.25)';
+                    emoji.style.opacity = '1';
 
-                const margin = {top: 20, right: 30, bottom: 40, left: 50};
-                const width = 800 - margin.left - margin.right;
-                const height = 300 - margin.top - margin.bottom;
+                    const mood = emoji.dataset.mood;
+                    moodFeedback.textContent = moodResponses[mood];
+                    moodFeedback.style.color = 'var(--dark-amber)';
+                });
+            });
 
-                const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-                const xScale = d3.scaleLinear()
-                    .domain(d3.extent(co2Data, d => d.year))
-                    .range([0, width]);
-
-                const yScale = d3.scaleLinear()
-                    .domain(d3.extent(co2Data, d => d.co2))
-                    .range([height, 0]);
-
-                const line = d3.line()
-                    .x(d => xScale(d.year))
-                    .y(d => yScale(d.co2))
-                    .curve(d3.curveMonotoneX);
-
-                g.append("g")
-                    .attr("transform", `translate(0,${height})`)
-                    .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
-
-                g.append("g")
-                    .call(d3.axisLeft(yScale));
-
-                g.append("path")
-                    .datum(co2Data)
-                    .attr("fill", "none")
-                    .attr("stroke", "#3498db")
-                    .attr("stroke-width", 2)
-                    .attr("d", line);
-
-                g.append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 0 - margin.left)
-                    .attr("x", 0 - (height / 2))
-                    .attr("dy", "1em")
-                    .style("text-anchor", "middle")
-                    .text("CO₂ Concentration (ppm)");
-
-                g.append("text")
-                    .attr("transform", `translate(${width/2}, ${height + margin.bottom})`)
-                    .style("text-anchor", "middle")
-                    .text("Year");
+            // 3. Social Skills Scenario
+            const socialOptions = document.querySelectorAll('.social-option');
+            const socialFeedback = document.getElementById('social-feedback');
+            const socialResponses = {
+                'A': { text: "This might make the new student feel more lonely. Let's try a friendlier approach.", color: '#EAB308' }, // Yellow
+                'B': { text: "Excellent choice! Being direct and friendly is a great way to make someone feel welcome.", color: '#16A34A' }, // Green
+                'C': { text: "It's good to ask for advice, but sometimes taking the first step yourself shows confidence.", color: '#3B82F6' } // Blue
             };
 
-            const renderConsensus = () => (
-                <div className="content-section">
-                    <h2>Scientific Consensus on Climate Change</h2>
-                    <p>Understanding what the scientific community actually says about climate change.</p>
-                    
-                    <div className="consensus-stats">
-                        <div className="stat-card">
-                            <div className="stat-number">99.9%</div>
-                            <div className="stat-label">of peer-reviewed papers support human causation</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-number">88,125</div>
-                            <div className="stat-label">climate papers analyzed (2012-2020)</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-number">28</div>
-                            <div className="stat-label">papers skeptical of human causation</div>
-                        </div>
-                    </div>
+            socialOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const choice = option.textContent.charAt(0);
+                    socialFeedback.textContent = `Feedback: ${socialResponses[choice].text}`;
+                    socialFeedback.style.color = socialResponses[choice].color;
+                });
+            });
 
-                    <div className="data-source">
-                        Source: Lynas et al. (2021) - Environmental Research Letters
-                    </div>
+            // 4. Accessibility Settings
+            const fontSizeSlider = document.getElementById('font-size-slider');
+            const contrastToggle = document.getElementById('contrast-toggle');
+            const body = document.body;
 
-                    <h3>What This Means</h3>
-                    <p>The level of scientific consensus on human-caused climate change is comparable to the consensus on other well-established scientific facts, such as the link between smoking and cancer or the effectiveness of vaccines.</p>
+            fontSizeSlider.addEventListener('input', (e) => {
+                body.style.fontSize = `${e.target.value}px`;
+            });
 
-                    <h3>How We Know</h3>
-                    <ul>
-                        <li><strong>Temperature Records:</strong> Multiple independent datasets show consistent warming</li>
-                        <li><strong>Physical Evidence:</strong> Shrinking ice sheets, rising sea levels, changing precipitation patterns</li>
-                        <li><strong>Isotopic Analysis:</strong> Carbon isotopes show the excess CO₂ comes from fossil fuels</li>
-                        <li><strong>Climate Models:</strong> Successfully predict observed changes and regional patterns</li>
-                    </ul>
-                </div>
-            );
-
-            const renderMythVsScience = () => (
-                <div className="content-section">
-                    <h2>Myth vs. Science: Common Misconceptions</h2>
-                    <p>Addressing frequently encountered claims with scientific evidence.</p>
-                    
-                    {mythsAndScience.map((item, index) => (
-                        <div key={index}>
-                            <div className="myth-card">
-                                <h4>❌ Common Claim:</h4>
-                                <p>"{item.myth}"</p>
-                            </div>
-                            <div className="science-card">
-                                <h4>✅ Scientific Evidence:</h4>
-                                <p>{item.science}</p>
-                                <p><strong>Evidence:</strong> {item.evidence}</p>
-                            </div>
-                        </div>
-                    ))}
-
-                    <h3>Alternative Theories: Planetary Influences</h3>
-                    <div className="science-card">
-                        <h4>Solar Cycles and Planetary Motion</h4>
-                        <p>While solar cycles and planetary positions do have minor effects on Earth's climate, these natural forcings are insufficient to explain the rapid warming observed since 1980. Solar irradiance has been measured directly by satellites since 1978 and shows no increasing trend that could account for the observed warming.</p>
-                        <p><strong>Evidence:</strong> Satellite measurements, solar irradiance data, and climate attribution studies</p>
-                    </div>
-                </div>
-            );
-
-            const renderClimateData = () => (
-                <div className="content-section">
-                    <h2>Interactive Climate Data</h2>
-                    <p>Explore real climate data and trends.</p>
-
-                    <h3>Global Temperature Anomalies (1880-2023)</h3>
-                    <div className="chart-container">
-                        <svg ref={tempChartRef} className="temperature-chart"></svg>
-                        <div className="data-source">
-                            Data: NASA GISS Temperature Analysis
-                        </div>
-                    </div>
-
-                    <h3>Atmospheric CO₂ Concentrations</h3>
-                    <div className="chart-container">
-                        <svg ref={co2ChartRef} className="co2-chart"></svg>
-                        <div className="data-source">
-                            Data: NOAA Mauna Loa Observatory
-                        </div>
-                    </div>
-
-                    <h3>Key Observations</h3>
-                    <ul>
-                        <li>Global average temperature has increased by approximately 1.1°C since 1880</li>
-                        <li>The warming rate has accelerated in recent decades</li>
-                        <li>CO₂ levels have increased from ~315 ppm in 1960 to over 420 ppm today</li>
-                        <li>The correlation between CO₂ increase and temperature rise is clear</li>
-                    </ul>
-                </div>
-            );
-
-            const renderMethodology = () => (
-                <div className="content-section">
-                    <h2>How Climate Science Works</h2>
-                    <p>Understanding the scientific method in climate research.</p>
-
-                    <div className="methodology-step">
-                        <h4>1. Observations</h4>
-                        <p>Scientists collect data from weather stations, satellites, ice cores, tree rings, and ocean buoys worldwide. This creates a comprehensive picture of Earth's climate system.</p>
-                    </div>
-
-                    <div className="methodology-step">
-                        <h4>2. Hypothesis Formation</h4>
-                        <p>Based on observations, scientists develop hypotheses about what's causing climate changes. These must be testable and falsifiable.</p>
-                    </div>
-
-                    <div className="methodology-step">
-                        <h4>3. Climate Models</h4>
-                        <p>Mathematical models based on physical laws are used to test hypotheses. These models must successfully reproduce past climate changes to be considered reliable.</p>
-                    </div>
-
-                    <div className="methodology-step">
-                        <h4>4. Peer Review</h4>
-                        <p>Research is submitted to scientific journals where independent experts evaluate the methods, data, and conclusions before publication.</p>
-                    </div>
-
-                    <div className="methodology-step">
-                        <h4>5. Replication and Validation</h4>
-                        <p>Other scientists attempt to replicate results using different methods and datasets. Consistent results across multiple studies build confidence in the findings.</p>
-                    </div>
-
-                    <h3>Climate Model Accuracy</h3>
-                    <p>Climate models have successfully predicted:</p>
-                    <ul>
-                        <li>Arctic warming amplification</li>
-                        <li>Cooling of the upper atmosphere while surface warms</li>
-                        <li>Regional precipitation changes</li>
-                        <li>Seasonal timing shifts</li>
-                    </ul>
-
-                    <div className="data-source">
-                        Note: While models aren't perfect, they provide our best understanding of the climate system based on physical laws and empirical evidence.
-                    </div>
-                </div>
-            );
-
-            const renderUncertainty = () => (
-                <div className="content-section">
-                    <h2>Understanding Scientific Uncertainty</h2>
-                    <p>How scientists handle and communicate uncertainty in climate research.</p>
-
-                    <h3>Types of Uncertainty</h3>
-                    
-                    <div className="methodology-step">
-                        <h4>Measurement Uncertainty</h4>
-                        <p>All measurements have some uncertainty. Scientists quantify this and include error bars in their analyses. For global temperature, the uncertainty is much smaller than the observed warming trend.</p>
-                    </div>
-
-                    <div className="methodology-step">
-                        <h4>Model Uncertainty</h4>
-                        <p>Climate models have limitations and assumptions. Scientists run many different models and scenarios to understand the range of possible outcomes. The warming trend is consistent across all models.</p>
-                    </div>
-
-                    <div className="methodology-step">
-                        <h4>Scenario Uncertainty</h4>
-                        <p>Future emissions depend on human choices. Scientists use different emission scenarios to explore possible futures, which is why there's a range in climate projections.</p>
-                    </div>
-
-                    <h3>What We're Certain About</h3>
-                    <ul>
-                        <li>Earth is warming due to human activities</li>
-                        <li>CO₂ levels are increasing due to fossil fuel use</li>
-                        <li>Continued emissions will cause more warming</li>
-                        <li>Many climate impacts are already occurring</li>
-                    </ul>
-
-                    <h3>What Has Uncertainty</h3>
-                    <ul>
-                        <li>Exactly how much warming will occur by 2100</li>
-                        <li>Regional details of climate change</li>
-                        <li>Timing of some climate impacts</li>
-                        <li>Effectiveness of specific mitigation strategies</li>
-                    </ul>
-
-                    <p><strong>Key Point:</strong> Uncertainty doesn't mean "we don't know anything" - it means we understand the range of possible outcomes and can make informed decisions based on risk assessment.</p>
-                </div>
-            );
-
-            return (
-                <div className="container">
-                    <header className="header">
-                        <h1>Climate Science: Evidence & Understanding</h1>
-                        <p>Bridging the gap between rigorous science and public understanding</p>
-                    </header>
-
-                    <nav className="nav-tabs">
-                        <button 
-                            className={`nav-tab ${activeTab === 'consensus' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('consensus')}
-                        >
-                            Scientific Consensus
-                        </button>
-                        <button 
-                            className={`nav-tab ${activeTab === 'myths' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('myths')}
-                        >
-                            Myth vs. Science
-                        </button>
-                        <button 
-                            className={`nav-tab ${activeTab === 'data' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('data')}
-                        >
-                            Climate Data
-                        </button>
-                        <button 
-                            className={`nav-tab ${activeTab === 'methodology' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('methodology')}
-                        >
-                            How Science Works
-                        </button>
-                        <button 
-                            className={`nav-tab ${activeTab === 'uncertainty' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('uncertainty')}
-                        >
-                            Understanding Uncertainty
-                        </button>
-                    </nav>
-
-                    <main>
-                        {activeTab === 'consensus' && renderConsensus()}
-                        {activeTab === 'myths' && renderMythVsScience()}
-                        {activeTab === 'data' && renderClimateData()}
-                        {activeTab === 'methodology' && renderMethodology()}
-                        {activeTab === 'uncertainty' && renderUncertainty()}
-                    </main>
-
-                    <footer className="content-section" style={{textAlign: 'center', marginTop: '40px'}}>
-                        <h3>About This Application</h3>
-                        <p>Created by Brian Clark as part of a critical thinking course project. This application aims to present climate science information in an accessible format while addressing common misconceptions.</p>
-                        <p><strong>Sources:</strong> NASA, NOAA, IPCC, peer-reviewed scientific literature</p>
-                        <p><em>For educational purposes. Always consult primary scientific sources for research.</em></p>
-                    </footer>
-                </div>
-            );
-        };
-
-        ReactDOM.render(<ClimateApp />, document.getElementById('root'));
+            contrastToggle.addEventListener('click', () => {
+                body.classList.toggle('high-contrast');
+            });
+        });
     </script>
 </body>
 </html>
