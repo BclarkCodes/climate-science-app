@@ -91,15 +91,25 @@
         body.high-contrast .border-rich-amber {
             border-color: #FFFF00;
         }
-    /* Logo hover effect */
-.logo-container {
-    transition: transform 0.3s ease-in-out;
-}
-.logo-container:hover {
-    transform: scale(1.1);
-}
+        /* Logo hover effect */
+        .logo-container {
+            transition: transform 0.3s ease-in-out;
+        }
+        .logo-container:hover {
+            transform: scale(1.1);
+        }
 
+        /* Progress bar styles */
+        .progress-bar {
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
 
+        /* Feature color coding */
+        .feature-adaptive { border-top-color: #DC2626; }
+        .feature-mental { border-top-color: #14B8A6; }
+        .feature-social { border-top-color: #F59E0B; }
+        .feature-accessibility { border-top-color: #8B5CF6; }
     </style>
 </head>
 <body class="antialiased">
@@ -111,23 +121,40 @@
                <!-- BMT Logo -->
         <div class="w-12 h-12 logo-container">
             <img src="https://drive.google.com/thumbnail?id=1pjWHJykXf43-CwmRRrOrZNkSZ-6Ikdf1&sz=w200"
-            alt="BMT Logo"
+            alt="BMT Logo - Flower-shaped design representing growth and learning"
             class="w-full h-full object-contain">
         </div>
 
                 <div>
-                    <h1 class="text-xl md:text-2xl font-black text-dark-amber">Education for All Alliance</h1>
-                    <p class="text-xs md:text-sm text-warm-brown">AI-Powered Adaptive Learning & Wellness Platform</p>
+                    <h1 class="text-xl md:text-2xl font-black text-dark-amber" data-translate="header.title">Education for All Alliance</h1>
+                    <p class="text-xs md:text-sm text-warm-brown" data-translate="header.subtitle">Supporting UN SDG 4: Quality Education for All</p>
                 </div>
             </div>
             <!-- Desktop Navigation -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="#home" class="text-warm-brown hover:text-rich-amber transition-all">Home</a>
-                <a href="#features" class="text-warm-brown hover:text-rich-amber transition-all">Features</a>
-                <a href="#demo" class="text-warm-brown hover:text-rich-amber transition-all">Demo</a>
-                <a href="#team" class="text-warm-brown hover:text-rich-amber transition-all">Team</a>
-                <a href="#impact" class="text-warm-brown hover:text-rich-amber transition-all">Impact</a>
-                <a href="#contact" class="text-warm-brown hover:text-rich-amber transition-all">Contact</a>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#home" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.home">Home</a>
+                <a href="#sdg4" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.sdg4">UN SDG 4</a>
+                <a href="#features" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.features">Features</a>
+                <a href="#day-in-life" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.realuse">Real Use</a>
+                <a href="#demo" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.demo">Demo</a>
+                <a href="#team" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.team">Team</a>
+                <a href="#impact" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.impact">Impact</a>
+                <a href="#contact" class="text-warm-brown hover:text-rich-amber transition-all" data-translate="nav.contact">Contact</a>
+                
+                <!-- Language Selector -->
+                <div class="relative">
+                    <select id="language-selector" class="bg-light-cream border border-rich-amber rounded-lg px-3 py-1 text-sm text-warm-brown focus:outline-none focus:ring-2 focus:ring-rich-amber">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Português</option>
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
             </nav>
             <!-- Mobile Menu Button -->
             <div class="md:hidden">
@@ -138,24 +165,132 @@
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#home" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Home</a>
-            <a href="#features" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Features</a>
-            <a href="#demo" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Demo</a>
-            <a href="#team" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Team</a>
-            <a href="#impact" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Impact</a>
-            <a href="#contact" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream">Contact</a>
+            <a href="#home" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.home">Home</a>
+            <a href="#sdg4" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.sdg4">UN SDG 4</a>
+            <a href="#features" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.features">Features</a>
+            <a href="#day-in-life" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.realuse">Real Use</a>
+            <a href="#demo" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.demo">Demo</a>
+            <a href="#team" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.team">Team</a>
+            <a href="#impact" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.impact">Impact</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-warm-brown hover:bg-light-cream" data-translate="nav.contact">Contact</a>
+            <div class="p-4 border-t">
+                <label class="text-sm font-semibold text-warm-brown block mb-2">Language:</label>
+                <select id="mobile-language-selector" class="w-full bg-light-cream border border-rich-amber rounded-lg px-3 py-1 text-sm text-warm-brown focus:outline-none focus:ring-2 focus:ring-rich-amber">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
         </div>
     </header>
 
     <main>
+        <!-- Crisis Hotline Banner - Updated with softer colors and clean formatting -->
+        <section class="bg-orange-400 text-white py-4 text-center relative" id="crisis-banner">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-8">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                        </svg>
+                        <span class="font-bold text-sm md:text-base" data-translate="crisis.title">Crisis Support Available 24/7</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-6 text-sm">
+                        <div class="flex items-center">
+                            <span data-translate="crisis.call.prefix">Call:</span>
+                            <span class="font-bold mx-1" data-translate="crisis.call.number">988</span>
+                            <span data-translate="crisis.call.suffix">(US Crisis Lifeline)</span>
+                        </div>
+                        <span class="hidden sm:inline text-white/70">•</span>
+                        <div class="flex items-center">
+                            <span data-translate="crisis.text.prefix">Text:</span>
+                            <span class="font-bold mx-1" data-translate="crisis.text.keyword">HOME</span>
+                            <span data-translate="crisis.text.middle">to</span>
+                            <span class="font-bold mx-1" data-translate="crisis.text.number">741741</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Hero Section -->
         <section id="home" class="bg-light-cream py-20 md:py-32">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl md:text-6xl font-black mb-4 leading-tight">Transforming Education for Every Child Through AI</h2>
-                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-warm-brown">Our adaptive learning platform provides personalized academic pathways and integrated mental health support, ensuring children with learning disabilities can achieve their full potential.</p>
+                <div class="mb-6 inline-flex items-center bg-rich-amber text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span data-translate="hero.badge">Supporting UN Sustainable Development Goal 4</span>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-black mb-4 leading-tight" data-translate="hero.title">Transforming Education for Every Child Through AI</h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-warm-brown" data-translate="hero.description">Our adaptive learning platform provides personalized academic pathways and integrated mental health support, ensuring children with learning disabilities can achieve their full potential through intelligent AI that adapts to their unique needs.</p>
                 <div class="flex justify-center space-x-4">
-                    <a href="#demo" class="bg-rich-amber text-white font-bold py-3 px-8 rounded-full hover:bg-dark-amber transition-all shadow-lg">View Demo</a>
-                    <a href="#features" class="bg-accent-gold text-dark-brown font-bold py-3 px-8 rounded-full hover:bg-rich-amber hover:text-white transition-all shadow-lg">Learn More</a>
+                    <a href="#demo" class="bg-rich-amber text-white font-bold py-3 px-8 rounded-full hover:bg-dark-amber transition-all shadow-lg" data-translate="hero.demo">View Demo</a>
+                    <a href="#sdg4" class="bg-accent-gold text-dark-brown font-bold py-3 px-8 rounded-full hover:bg-rich-amber hover:text-white transition-all shadow-lg" data-translate="hero.learn">Learn About SDG 4</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- UN SDG 4 Section (New) -->
+        <section id="sdg4" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold">UN Sustainable Development Goal 4</h3>
+                    <p class="text-lg text-warm-brown mt-2">Quality Education: Ensuring Inclusive and Equitable Education for All</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="bg-light-cream p-8 rounded-lg">
+                            <h4 class="text-2xl font-bold mb-4">SDG 4: Quality Education</h4>
+                            <p class="text-warm-brown mb-4">SDG 4 aims to "ensure inclusive and equitable quality education and promote lifelong learning opportunities for all" by 2030.</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <span class="text-rich-amber text-xl">•</span>
+                                    <span>Ensure all children complete free primary and secondary education</span>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="text-rich-amber text-xl">•</span>
+                                    <span>Eliminate gender disparities in education</span>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="text-rich-amber text-xl">•</span>
+                                    <span>Ensure equal access for vulnerable populations, including persons with disabilities</span>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="text-rich-amber text-xl">•</span>
+                                    <span>Promote quality technical and vocational training</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-rich-amber text-white p-8 rounded-lg">
+                        <h4 class="text-2xl font-bold mb-4">How We Address SDG 4</h4>
+                        <p class="mb-4">Our Education for All Alliance platform directly contributes to SDG 4 by:</p>
+                        <div class="space-y-3">
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-6 h-6 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                <span>Providing 24/7 accessible education for children with learning disabilities</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-6 h-6 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                <span>Eliminating educational barriers through AI-powered personalization</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-6 h-6 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                <span>Promoting inclusive learning environments that adapt to individual needs</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-6 h-6 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                <span>Supporting holistic development including emotional and social skills</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -164,62 +299,186 @@
         <section id="features" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl md:text-4xl font-bold">An Integrated Approach to Learning and Wellness</h3>
-                    <p class="text-lg text-warm-brown mt-2">Our platform is built on four core pillars designed to support the whole child.</p>
+                    <h3 class="text-3xl md:text-4xl font-bold">Four Core Pillars of Learning</h3>
+                    <p class="text-lg text-warm-brown mt-2">Our platform integrates academic, emotional, social, and accessibility support through intelligent AI adaptation.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Feature 1: Adaptive Learning -->
-                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-rich-amber transition-all">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
-                            <svg class="w-8 h-8 text-rich-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 feature-adaptive transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
+                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
                         </div>
                         <h4 class="text-xl font-bold mb-2">Adaptive Learning</h4>
-                        <p class="text-warm-brown">Our AI core adjusts lesson difficulty and teaching methods in real-time, matching each child's unique pace and learning style for optimal comprehension.</p>
+                        <p class="text-warm-brown text-sm mb-3">Our AI monitors performance, stress levels, and engagement in real-time, automatically adjusting lesson difficulty and teaching methods to match each child's unique learning pace and style.</p>
+                        <div class="text-xs bg-red-50 p-2 rounded">
+                            <strong>AI Example:</strong> If a child struggles with fractions, the AI provides visual aids and reduces complexity. If they excel, it introduces advanced concepts.
+                        </div>
                     </div>
                     <!-- Feature 2: Mental Health Support -->
-                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-accent-gold transition-all">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
-                            <svg class="w-8 h-8 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 feature-mental transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 mb-4">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
                         </div>
                         <h4 class="text-xl font-bold mb-2">Mental Health Support</h4>
-                        <p class="text-warm-brown">Integrated tools like mood tracking, guided breathing exercises, and positive reinforcement help build emotional resilience and wellness.</p>
+                        <p class="text-warm-brown text-sm mb-3">AI-powered mood tracking and personalized wellness activities help build emotional resilience and provide immediate support when stress is detected.</p>
+                        <div class="text-xs bg-teal-50 p-2 rounded">
+                            <strong>AI Example:</strong> When mood tracking indicates frustration, the system suggests a 2-minute breathing exercise before continuing lessons.
+                        </div>
+                        <div class="mt-3 p-3 bg-orange-50 border-l-4 border-orange-400 rounded-r">
+                            <p class="text-xs font-semibold text-orange-700">Need Immediate Help?</p>
+                            <p class="text-xs text-orange-600 mt-1">Crisis support: Call <span class="font-bold">988</span> or text <span class="font-bold">HOME</span> to <span class="font-bold">741741</span></p>
+                        </div>
                     </div>
                     <!-- Feature 3: Social Skills Coaching -->
-                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-rich-amber transition-all">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
-                            <svg class="w-8 h-8 text-rich-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 feature-social transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 mb-4">
+                            <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
                         </div>
                         <h4 class="text-xl font-bold mb-2">Social Skills Coaching</h4>
-                        <p class="text-warm-brown">Interactive scenarios and AI-driven conversation training provide a safe space for children to practice and improve their social interactions.</p>
+                        <p class="text-warm-brown text-sm mb-3">Interactive scenarios powered by natural language processing provide safe spaces for children to practice conversations and develop confidence in social situations.</p>
+                        <div class="text-xs bg-yellow-50 p-2 rounded">
+                            <strong>AI Example:</strong> Role-playing conversations adapt based on the child's responses, providing gentle guidance for better social outcomes.
+                        </div>
                     </div>
                     <!-- Feature 4: Accessibility Features -->
-                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 border-accent-gold transition-all">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-light-cream mb-4">
-                            <svg class="w-8 h-8 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-md border-t-4 feature-accessibility transition-all">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-purple-100 mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
                         </div>
                         <h4 class="text-xl font-bold mb-2">Accessibility Features</h4>
-                        <p class="text-warm-brown">A fully customizable interface with speech-to-text, visual aids, adjustable fonts, and high-contrast modes to meet diverse needs.</p>
+                        <p class="text-warm-brown text-sm mb-3">Computer vision and speech recognition create a fully customizable interface with text-to-speech, visual aids, and adaptive controls for diverse physical and cognitive needs.</p>
+                        <div class="text-xs bg-purple-50 p-2 rounded">
+                            <strong>AI Example:</strong> Eye-tracking detects reading difficulties and automatically enlarges text or switches to audio mode.
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Day in the Life Section (New) -->
+        <section id="day-in-life" class="py-20 bg-light-cream">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold">A Day with Emma: Real-World Impact</h3>
+                    <p class="text-lg text-warm-brown mt-2">See how our AI adapts to support 8-year-old Emma, who has ADHD and dyslexia.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <h4 class="text-xl font-bold mb-4 text-center">Morning Session (9:00 AM)</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                                <div>
+                                    <p class="font-semibold">Emma logs in feeling excited</p>
+                                    <p class="text-sm text-warm-brown">Mood tracker: Happy 😊</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                                <div>
+                                    <p class="font-semibold">AI detects high energy</p>
+                                    <p class="text-sm text-warm-brown">System starts with interactive math games instead of reading</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
+                                <div>
+                                    <p class="font-semibold">Earns first badge of the day</p>
+                                    <p class="text-sm text-warm-brown">"Math Champion" badge increases motivation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <h4 class="text-xl font-bold mb-4 text-center">Afternoon Challenge (2:00 PM)</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                                <div>
+                                    <p class="font-semibold">Emma struggles with reading passage</p>
+                                    <p class="text-sm text-warm-brown">AI detects frustration through slow response times</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                                <div>
+                                    <p class="font-semibold">Automatic adaptation triggered</p>
+                                    <p class="text-sm text-warm-brown">Text enlarges, words highlight, audio support activates</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
+                                <div>
+                                    <p class="font-semibold">Mood tracking detects stress</p>
+                                    <p class="text-sm text-warm-brown">System suggests a 3-minute calming activity before continuing</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 bg-rich-amber text-white rounded-lg p-6 text-center">
+                    <h4 class="text-xl font-bold mb-2">Result: 85% Improved Learning Outcomes</h4>
+                    <p>By adapting in real-time to Emma's needs, energy levels, and emotional state, our AI helps her learn more effectively while building confidence and emotional resilience.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Interactive Demo Section -->
-        <section id="demo" class="py-20 bg-light-cream">
+        <section id="demo" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl md:text-4xl font-bold">Experience the Platform</h3>
-                    <p class="text-lg text-warm-brown mt-2">Interact with a live demo to see how our AI-powered features work.</p>
+                    <p class="text-lg text-warm-brown mt-2">Interact with our AI-powered features and see how gamification keeps children engaged.</p>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-xl p-8 border border-gray-200">
+                    
+                    <!-- Progress & Gamification Bar -->
+                    <div class="mb-8 bg-gray-100 p-4 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold">Today's Progress</h4>
+                            <span id="progress-percentage" class="text-sm font-semibold">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-300 rounded-full h-3">
+                            <div id="progress-bar" class="progress-bar bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full"></div>
+                        </div>
+                        <div class="flex justify-between mt-2">
+                            <div class="text-center">
+                                <span id="badges-earned" class="text-2xl">0</span>
+                                <p class="text-xs">Badges</p>
+                            </div>
+                            <div class="text-center">
+                                <span id="streak-count" class="text-2xl">0</span>
+                                <p class="text-xs">Day Streak</p>
+                            </div>
+                            <div class="text-center">
+                                <span id="points-earned" class="text-2xl">0</span>
+                                <p class="text-xs">Points</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
                         <!-- Left Column: Learning & Social -->
                         <div>
                             <!-- Adaptive Math Problem -->
                             <div class="mb-8">
-                                <h4 class="text-xl font-bold mb-4">1. Adaptive Learning: Math Challenge</h4>
+                                <h4 class="text-xl font-bold mb-4 flex items-center">
+                                    <span class="bg-red-100 text-red-600 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                                    </span>
+                                    Adaptive Learning: Math Challenge
+                                </h4>
                                 <div id="math-problem-container" class="bg-gray-100 p-6 rounded-lg">
                                     <p class="text-lg text-center font-semibold mb-4" id="math-question">What is 5 + 7?</p>
                                     <div id="math-options" class="grid grid-cols-2 gap-4">
@@ -234,7 +493,12 @@
 
                             <!-- Social Skills Scenario -->
                             <div>
-                                <h4 class="text-xl font-bold mb-4">2. Social Skills: Making a Friend</h4>
+                                <h4 class="text-xl font-bold mb-4 flex items-center">
+                                    <span class="bg-yellow-100 text-yellow-600 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/></svg>
+                                    </span>
+                                    Social Skills: Making a Friend
+                                </h4>
                                 <div class="bg-gray-100 p-6 rounded-lg">
                                     <p class="mb-4">You see a new student sitting alone at lunch. What do you do?</p>
                                     <div id="social-options" class="space-y-3">
@@ -251,14 +515,19 @@
                         <div>
                              <!-- Mental Health Check-in -->
                             <div class="mb-8">
-                                <h4 class="text-xl font-bold mb-4">3. Mental Health: How are you feeling?</h4>
+                                <h4 class="text-xl font-bold mb-4 flex items-center">
+                                    <span class="bg-teal-100 text-teal-600 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/></svg>
+                                    </span>
+                                    Mental Health: How are you feeling?
+                                </h4>
                                 <div class="bg-gray-100 p-6 rounded-lg">
                                     <div id="mood-tracker" class="flex justify-around items-center">
                                         <span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Happy">😊</span>
-<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Okay">😐</span>
-<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Sad">😢</span>
-<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Anxious">😟</span>
-<span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Angry">😠</span>
+                                        <span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Okay">😐</span>
+                                        <span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Sad">😢</span>
+                                        <span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Anxious">😟</span>
+                                        <span class="mood-emoji text-5xl cursor-pointer transform hover:scale-125 transition-transform" data-mood="Angry">😠</span>
                                     </div>
                                     <p id="mood-feedback" class="text-center mt-4 font-semibold"></p>
                                 </div>
@@ -266,7 +535,12 @@
 
                             <!-- Accessibility Settings -->
                             <div>
-                                <h4 class="text-xl font-bold mb-4">4. Accessibility Settings</h4>
+                                <h4 class="text-xl font-bold mb-4 flex items-center">
+                                    <span class="bg-purple-100 text-purple-600 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                                    </span>
+                                    Accessibility Settings
+                                </h4>
                                 <div class="bg-gray-100 p-6 rounded-lg space-y-4">
                                     <div>
                                         <label for="font-size-slider" class="font-semibold">Font Size</label>
@@ -298,21 +572,21 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <!-- Team Member 1 -->
                     <div class="bg-white p-8 rounded-lg shadow-md">
-                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=MM" alt="Monica McNair" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
+                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=MM" alt="Monica McNair - Project lead and AI specialist headshot" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
                         <h4 class="text-xl font-bold">Monica McNair</h4>
                         <p class="text-rich-amber font-semibold mb-2">Project Lead & AI Specialist</p>
                         <p class="text-warm-brown text-sm">Monica leads the project vision and oversees the development of the adaptive learning algorithms, ensuring our AI is both effective and ethical.</p>
                     </div>
                     <!-- Team Member 2 -->
                     <div class="bg-white p-8 rounded-lg shadow-md">
-                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=BC" alt="Brian Clark" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
+                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=BC" alt="Brian Clark - UX/UI and frontend developer headshot" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
                         <h4 class="text-xl font-bold">Brian Clark</h4>
                         <p class="text-rich-amber font-semibold mb-2">UX/UI & Frontend Developer</p>
                         <p class="text-warm-brown text-sm">Brian crafts the user experience, focusing on creating an intuitive, accessible, and engaging interface for children, parents, and educators.</p>
                     </div>
                     <!-- Team Member 3 -->
                     <div class="bg-white p-8 rounded-lg shadow-md">
-                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=TB" alt="Tonya Barnes" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
+                        <img src="https://placehold.co/150x150/FEF3C7/78350F?text=TB" alt="Tonya Barnes - Research and content strategist headshot" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-light-cream">
                         <h4 class="text-xl font-bold">Tonya Barnes</h4>
                         <p class="text-rich-amber font-semibold mb-2">Research & Content Strategist</p>
                         <p class="text-warm-brown text-sm">Tonya grounds our work in evidence-based practices, conducting research and developing content for mental wellness and social skills modules.</p>
@@ -330,11 +604,11 @@
                         <h3 class="text-3xl font-bold mb-4">Our Mission</h3>
                         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
                             <h4 class="text-xl font-bold mb-2">The Problem</h4>
-                            <p class="text-warm-brown">Children with learning disabilities often face significant educational barriers. Many existing digital tools are one-size-fits-all, failing to support the diverse spectrum of learning needs. Compounded by the reduction of specialized support in schools and the impact of mental health challenges, a critical gap exists in providing effective, personalized education.</p>
+                            <p class="text-warm-brown">Children with learning disabilities face significant educational barriers. Many existing digital tools fail to support diverse learning needs. With reduced specialized support in schools and growing mental health challenges, a critical gap exists in providing effective, personalized education.</p>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h4 class="text-xl font-bold mb-2">Our Solution & Hypothesis</h4>
-                            <p class="text-warm-brown"><strong>Hypothesis:</strong> If we provide higher quality, personalized education for children with learning disabilities, then we can deliver one-on-one AI-powered experiences that adapt to each child's unique academic and emotional needs, leading to improved outcomes and greater well-being.</p>
+                            <p class="text-warm-brown"><strong>Hypothesis:</strong> By providing AI-powered personalized education that adapts to each child's unique academic and emotional needs in real-time, we can deliver improved learning outcomes and greater well-being for children with learning disabilities.</p>
                         </div>
                     </div>
                     <!-- Right Column: Research & Impact -->
@@ -342,17 +616,17 @@
                         <h3 class="text-3xl font-bold mb-4">Research & Global Impact</h3>
                         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
                             <h4 class="text-xl font-bold mb-2">Evidence-Based Foundation</h4>
-                            <p class="text-warm-brown">Our approach is built upon a strong foundation of scholarly research in special education, AI, and developmental psychology. We have compiled an extensive annotated bibliography of peer-reviewed sources that validate the effectiveness of adaptive technology and integrated wellness support. This ensures our design decisions are evidence-based and impactful.</p>
+                            <p class="text-warm-brown">Our approach builds upon extensive research in special education, AI, and developmental psychology. We've compiled peer-reviewed sources validating adaptive technology and integrated wellness support, ensuring our design decisions are evidence-based and impactful.</p>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h4 class="text-xl font-bold mb-2">Technology & Security</h4>
-                            <p class="text-warm-brown">We leverage AI/ML for adaptive learning, NLP for social coaching, and computer vision for engagement analytics. Privacy is paramount; we are committed to compliance with COPPA, HIPAA, and GDPR, using end-to-end encryption and transparent consent protocols to protect user data.</p>
+                            <p class="text-warm-brown">We leverage AI/ML for adaptive learning, NLP for social coaching, and computer vision for engagement analytics. Privacy is paramount with COPPA, HIPAA, and GDPR compliance, using end-to-end encryption and transparent consent protocols.</p>
                         </div>
                     </div>
                 </div>
                 <div class="text-center mt-12 bg-white p-8 rounded-lg shadow-lg border-t-4 border-rich-amber">
                     <h4 class="text-2xl font-bold">Making Earth a Better Planet</h4>
-                    <p class="text-lg text-warm-brown mt-2 max-w-4xl mx-auto">By providing 24/7, accessible, and high-quality support, we aim to help over <strong>10 million children</strong>, projecting an <strong>85% improvement</strong> in learning outcomes. Our work directly addresses UN SDG #4, promoting inclusive and equitable education for all and fostering a more sustainable future.</p>
+                    <p class="text-lg text-warm-brown mt-2 max-w-4xl mx-auto">By providing 24/7 accessible, high-quality support, we aim to help over <strong>10 million children</strong>, projecting an <strong>85% improvement</strong> in learning outcomes. Our work directly addresses UN SDG 4, promoting inclusive and equitable education for all.</p>
                 </div>
             </div>
         </section>
@@ -362,7 +636,7 @@
     <!-- Footer -->
     <footer id="contact" class="bg-dark-brown text-cream-bg py-12">
         <div class="container mx-auto px-6 text-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/University_of_Arizona_Global_Campus_logo.svg" alt="University of Arizona Global Campus Logo" class="h-12 mx-auto mb-4 filter invert brightness-0">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/University_of_Arizona_Global_Campus_logo.svg" alt="University of Arizona Global Campus official logo" class="h-12 mx-auto mb-4 filter invert brightness-0">
             <p class="font-semibold">University of Arizona Global Campus</p>
             <p class="text-sm mb-4">HON490: Honors Program Capstone</p>
             <p class="text-sm">This project is a conceptual demonstration for academic purposes.</p>
@@ -374,13 +648,231 @@
     </footer>
 
     <script>
+        // Translation System - Updated to handle HTML properly
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.sdg4': 'UN SDG 4',
+                'nav.features': 'Features',
+                'nav.realuse': 'Real Use',
+                'nav.demo': 'Demo',
+                'nav.team': 'Team',
+                'nav.impact': 'Impact',
+                'nav.contact': 'Contact',
+                'header.title': 'Education for All Alliance',
+                'header.subtitle': 'Supporting UN SDG 4: Quality Education for All',
+                'hero.badge': 'Supporting UN Sustainable Development Goal 4',
+                'hero.title': 'Transforming Education for Every Child Through AI',
+                'hero.description': 'Our adaptive learning platform provides personalized academic pathways and integrated mental health support, ensuring children with learning disabilities can achieve their full potential through intelligent AI that adapts to their unique needs.',
+                'hero.demo': 'View Demo',
+                'hero.learn': 'Learn About SDG 4',
+                'crisis.title': 'Crisis Support Available 24/7',
+                'crisis.call.prefix': 'Call:',
+                'crisis.call.number': '988',
+                'crisis.call.suffix': '(US Crisis Lifeline)',
+                'crisis.text.prefix': 'Text:',
+                'crisis.text.keyword': 'HOME',
+                'crisis.text.middle': 'to',
+                'crisis.text.number': '741741'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.sdg4': 'ODS 4 ONU',
+                'nav.features': 'Características',
+                'nav.realuse': 'Uso Real',
+                'nav.demo': 'Demostración',
+                'nav.team': 'Equipo',
+                'nav.impact': 'Impacto',
+                'nav.contact': 'Contacto',
+                'header.title': 'Alianza Educación para Todos',
+                'header.subtitle': 'Apoyando el ODS 4 de la ONU: Educación de Calidad para Todos',
+                'hero.badge': 'Apoyando el Objetivo de Desarrollo Sostenible 4 de la ONU',
+                'hero.title': 'Transformando la Educación para Cada Niño a Través de IA',
+                'hero.description': 'Nuestra plataforma de aprendizaje adaptativo proporciona rutas académicas personalizadas y apoyo integrado de salud mental, asegurando que los niños con dificultades de aprendizaje puedan alcanzar su máximo potencial.',
+                'hero.demo': 'Ver Demostración',
+                'hero.learn': 'Aprender sobre ODS 4',
+                'crisis.title': 'Apoyo en Crisis Disponible 24/7',
+                'crisis.call.prefix': 'Llame:',
+                'crisis.call.number': '988',
+                'crisis.call.suffix': '(Línea de Crisis de EE.UU.)',
+                'crisis.text.prefix': 'Texto:',
+                'crisis.text.keyword': 'HOME',
+                'crisis.text.middle': 'a',
+                'crisis.text.number': '741741'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.sdg4': 'ODD 4 ONU',
+                'nav.features': 'Fonctionnalités',
+                'nav.realuse': 'Usage Réel',
+                'nav.demo': 'Démo',
+                'nav.team': 'Équipe',
+                'nav.impact': 'Impact',
+                'nav.contact': 'Contact',
+                'header.title': 'Alliance Éducation pour Tous',
+                'header.subtitle': 'Soutenant l\'ODD 4 de l\'ONU: Éducation de Qualité pour Tous',
+                'hero.badge': 'Soutenant l\'Objectif de Développement Durable 4 de l\'ONU',
+                'hero.title': 'Transformer l\'Éducation pour Chaque Enfant grâce à l\'IA',
+                'hero.description': 'Notre plateforme d\'apprentissage adaptatif fournit des parcours académiques personnalisés et un soutien intégré en santé mentale, garantissant que les enfants avec des difficultés d\'apprentissage puissent atteindre leur plein potentiel.',
+                'hero.demo': 'Voir la Démo',
+                'hero.learn': 'En savoir plus sur l\'ODD 4',
+                'crisis.title': 'Soutien en Crise Disponible 24h/24',
+                'crisis.call.prefix': 'Appelez:',
+                'crisis.call.number': '988',
+                'crisis.call.suffix': '(Ligne de Crise des États-Unis)',
+                'crisis.text.prefix': 'Texto:',
+                'crisis.text.keyword': 'HOME',
+                'crisis.text.middle': 'au',
+                'crisis.text.number': '741741'
+            },
+            de: {
+                'nav.home': 'Startseite',
+                'nav.sdg4': 'UN SDG 4',
+                'nav.features': 'Funktionen',
+                'nav.realuse': 'Echte Nutzung',
+                'nav.demo': 'Demo',
+                'nav.team': 'Team',
+                'nav.impact': 'Auswirkung',
+                'nav.contact': 'Kontakt',
+                'header.title': 'Bildung für Alle Allianz',
+                'header.subtitle': 'Unterstützung des UN SDG 4: Qualitätserziehung für Alle',
+                'hero.badge': 'Unterstützung des UN-Nachhaltigkeitsziels 4',
+                'hero.title': 'Bildung für Jedes Kind durch KI Transformieren',
+                'hero.description': 'Unsere adaptive Lernplattform bietet personalisierte akademische Wege und integrierte mentale Gesundheitsunterstützung, um sicherzustellen, dass Kinder mit Lernbehinderungen ihr volles Potenzial erreichen können.',
+                'hero.demo': 'Demo Ansehen',
+                'hero.learn': 'Über SDG 4 Lernen',
+                'crisis.title': 'Krisenhilfe 24/7 Verfügbar',
+                'crisis.call.prefix': 'Anrufen:',
+                'crisis.call.number': '988',
+                'crisis.call.suffix': '(US-Krisenhotline)',
+                'crisis.text.prefix': 'SMS:',
+                'crisis.text.keyword': 'HOME',
+                'crisis.text.middle': 'an',
+                'crisis.text.number': '741741'
+            },
+            it: {
+                'nav.home': 'Home',
+                'nav.sdg4': 'ONU SDG 4',
+                'nav.features': 'Caratteristiche',
+                'nav.realuse': 'Uso Reale',
+                'nav.demo': 'Demo',
+                'nav.team': 'Team',
+                'nav.impact': 'Impatto',
+                'nav.contact': 'Contatto',
+                'header.title': 'Alleanza Educazione per Tutti',
+                'header.subtitle': 'Supportando l\'ONU SDG 4: Educazione di Qualità per Tutti',
+                'hero.badge': 'Supportando l\'Obiettivo di Sviluppo Sostenibile 4 dell\'ONU',
+                'hero.title': 'Trasformare l\'Educazione per Ogni Bambino Attraverso l\'IA',
+                'hero.description': 'La nostra piattaforma di apprendimento adattivo fornisce percorsi accademici personalizzati e supporto integrato per la salute mentale, assicurando che i bambini con difficoltà di apprendimento possano raggiungere il loro pieno potenziale.',
+                'hero.demo': 'Guarda Demo',
+                'hero.learn': 'Impara sull\'SDG 4',
+                'crisis.title': 'Supporto di Crisi Disponibile 24/7',
+                'crisis.call.prefix': 'Chiama:',
+                'crisis.call.number': '988',
+                'crisis.call.suffix': '(Linea di Crisi degli Stati Uniti)',
+                'crisis.text.prefix': 'SMS:',
+                'crisis.text.keyword': 'HOME',
+                'crisis.text.middle': 'a',
+                'crisis.text.number': '741741'
+            },
+            zh: {
+                'nav.home': '主页',
+                'nav.sdg4': '联合国可持续发展目标4',
+                'nav.features': '特色',
+                'nav.realuse': '实际使用',
+                'nav.demo': '演示',
+                'nav.team': '团队',
+                'nav.impact': '影响',
+                'nav.contact': '联系',
+                'header.title': '全民教育联盟',
+                'header.subtitle': '支持联合国可持续发展目标4：人人享有优质教育',
+                'hero.badge': '支持联合国可持续发展目标4',
+                'hero.title': '通过人工智能改变每个孩子的教育',
+                'hero.description': '我们的自适应学习平台提供个性化的学术路径和综合心理健康支持，确保有学习障碍的儿童能够充分发挥其潜力。',
+                'hero.demo': '查看演示',
+                'hero.learn': '了解SDG 4',
+                'crisis.title': '24/7危机支持',
+                'crisis.call.prefix': '拨打：',
+                'crisis.call.number': '988',
+                'crisis.call.suffix': '（美国危机生命线）',
+                'crisis.text.prefix': '短信：',
+                'crisis.text.keyword': 'HOME',
+                'crisis.text.middle': '到',
+                'crisis.text.number': '741741'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translatePage(language) {
+            currentLanguage = language;
+            const elements = document.querySelectorAll('[data-translate]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            // Store language preference
+            localStorage.setItem('preferred-language', language);
+            
+            // Update both selectors
+            document.getElementById('language-selector').value = language;
+            document.getElementById('mobile-language-selector').value = language;
+            
+            // Update HTML lang attribute for accessibility
+            document.documentElement.lang = language;
+        }
+
+        function initializeLanguage() {
+            // Load saved language preference or default to English
+            const savedLanguage = localStorage.getItem('preferred-language') || 'en';
+            translatePage(savedLanguage);
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
+            // Initialize language system
+            initializeLanguage();
+
             // Mobile Menu Toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
+
+            // Language selectors
+            document.getElementById('language-selector').addEventListener('change', function(e) {
+                translatePage(e.target.value);
+            });
+
+            document.getElementById('mobile-language-selector').addEventListener('change', function(e) {
+                translatePage(e.target.value);
+            });
+
+            // Gamification variables
+            let totalProgress = 0;
+            let badgesEarned = 0;
+            let streakCount = 0;
+            let pointsEarned = 0;
+
+            function updateProgress(points) {
+                totalProgress = Math.min(totalProgress + points, 100);
+                pointsEarned += points;
+                
+                if (points > 0) {
+                    badgesEarned++;
+                    streakCount++;
+                }
+
+                document.getElementById('progress-bar').style.width = totalProgress + '%';
+                document.getElementById('progress-percentage').textContent = Math.round(totalProgress) + '%';
+                document.getElementById('badges-earned').textContent = badgesEarned;
+                document.getElementById('streak-count').textContent = streakCount;
+                document.getElementById('points-earned').textContent = pointsEarned;
+            }
 
             // --- INTERACTIVE DEMO LOGIC ---
 
@@ -393,8 +885,8 @@
             const mathProblems = {
                 1: { question: "What is 5 + 7?", answer: 12, options: [12, 10, 11, 13] },
                 2: { question: "What is 15 - 6?", answer: 9, options: [8, 9, 10, 21] },
-                3: { question: "What is 4 x 6?", answer: 24, options: [10, 20, 24, 28] },
-                4: { question: "What is 35 / 5?", answer: 7, options: [5, 6, 7, 8] },
+                3: { question: "What is 4 × 6?", answer: 24, options: [10, 20, 24, 28] },
+                4: { question: "What is 35 ÷ 5?", answer: 7, options: [5, 6, 7, 8] },
                 0: { question: "What is 3 + 2?", answer: 5, options: [4, 5, 6, 7] }, // Easier problem
             };
 
@@ -415,15 +907,17 @@
 
             function checkMathAnswer(selected, correct) {
                 if (selected === correct) {
-                    mathFeedback.textContent = "Correct! Great job! Here's a harder one.";
+                    mathFeedback.textContent = "🎉 Excellent! AI detects success and increases difficulty. +25 points!";
                     mathFeedback.style.color = '#16A34A'; // Green
                     mathLevel = Math.min(mathLevel + 1, 4); // Increase level, max 4
+                    updateProgress(25);
                 } else {
-                    mathFeedback.textContent = "Not quite, let's try an easier one to build confidence.";
+                    mathFeedback.textContent = "AI detects struggle and provides an easier problem to build confidence. +5 points for trying!";
                     mathFeedback.style.color = '#DC2626'; // Red
                     mathLevel = Math.max(mathLevel - 1, 0); // Decrease level, min 0
+                    updateProgress(5);
                 }
-                setTimeout(() => loadMathProblem(mathLevel), 2000);
+                setTimeout(() => loadMathProblem(mathLevel), 3000);
             }
 
             loadMathProblem(mathLevel);
@@ -432,11 +926,11 @@
             const moodEmojis = document.querySelectorAll('.mood-emoji');
             const moodFeedback = document.getElementById('mood-feedback');
             const moodResponses = {
-                Happy: "It's wonderful you're feeling happy! Let's keep that positive energy going.",
-                Okay: "Feeling okay is perfectly fine. Let's see if we can make today even better.",
-                Sad: "I'm sorry you're feeling sad. Remember it's okay to feel this way. Here's a 1-minute breathing exercise if you need it.",
-                Anxious: "Feeling anxious can be tough. Let's try to focus on the present moment. Take a few deep, slow breaths.",
-                Angry: "It's okay to feel angry sometimes. Let's take a moment to cool down. How about a quick, calming activity?"
+                Happy: "Wonderful! AI detects positive mood and maintains current learning pace. +15 points!",
+                Okay: "AI notes neutral mood and keeps activities engaging. +10 points!",
+                Sad: "AI detects sadness and suggests a 2-minute breathing exercise before continuing. +10 points for sharing!",
+                Anxious: "AI senses anxiety and automatically reduces lesson complexity. Here's a calming activity. +10 points!",
+                Angry: "AI detects frustration and suggests a quick movement break. Let's reset together. +10 points!"
             };
 
             moodEmojis.forEach(emoji => {
@@ -453,6 +947,7 @@
                     const mood = emoji.dataset.mood;
                     moodFeedback.textContent = moodResponses[mood];
                     moodFeedback.style.color = 'var(--dark-amber)';
+                    updateProgress(10);
                 });
             });
 
@@ -460,16 +955,18 @@
             const socialOptions = document.querySelectorAll('.social-option');
             const socialFeedback = document.getElementById('social-feedback');
             const socialResponses = {
-                'A': { text: "This might make the new student feel more lonely. Let's try a friendlier approach.", color: '#EAB308' }, // Yellow
-                'B': { text: "Excellent choice! Being direct and friendly is a great way to make someone feel welcome.", color: '#16A34A' }, // Green
-                'C': { text: "It's good to ask for advice, but sometimes taking the first step yourself shows confidence.", color: '#3B82F6' } // Blue
+                'A': { text: "AI provides gentle guidance: 'Let's think about how the new student might feel. Try a friendlier approach!' +5 points", color: '#EAB308', points: 5 },
+                'B': { text: "🌟 Perfect! AI celebrates your empathy and kindness. This builds social confidence! +30 points", color: '#16A34A', points: 30 },
+                'C': { text: "Good thinking! AI notes you value advice, and also suggests being brave to help others. +15 points", color: '#3B82F6', points: 15 }
             };
 
             socialOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     const choice = option.textContent.charAt(0);
-                    socialFeedback.textContent = `Feedback: ${socialResponses[choice].text}`;
-                    socialFeedback.style.color = socialResponses[choice].color;
+                    const response = socialResponses[choice];
+                    socialFeedback.textContent = response.text;
+                    socialFeedback.style.color = response.color;
+                    updateProgress(response.points);
                 });
             });
 
@@ -480,10 +977,12 @@
 
             fontSizeSlider.addEventListener('input', (e) => {
                 body.style.fontSize = `${e.target.value}px`;
+                updateProgress(2); // Small points for accessibility adjustments
             });
 
             contrastToggle.addEventListener('click', () => {
                 body.classList.toggle('high-contrast');
+                updateProgress(5); // Points for trying accessibility features
             });
         });
     </script>
